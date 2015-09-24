@@ -15,31 +15,40 @@ import java.util.Collection;
  * 
  * @author Evren Kaya
  */
-public interface Graph
+/**
+ * @author Brayden
+ *
+ * @param <V>
+ * @param <E>
+ */
+public interface Graph<V, E>
 {
 	/**
 	 * Adds the given vertex to the graph.
 	 * 
 	 * @param v A vertex
 	 */
-	void addVertex(DefaultVertex v);
+	void addVertex(V v);
 	
 	/**
 	 * Adds the given edge to the graph.
 	 * 
 	 * @param e An edge
+	 * @param v1 First vertex attached to e
+	 * @param v2 Second vertex attached to e
+	 * @param edgeDirection Direction of edge e
 	 */
-	void addEdge(DefaultEdge e);
+	void addEdge(V source, V destination, E e, EdgeDirection edgeDirection);
 	
 	/**
 	 * @param v A vertex
 	 */
-	void removeVertex(DefaultVertex v);
+	void removeVertex(V v);
 	
 	/**
 	 * @param e An edge
 	 */
-	void removeEdge(DefaultEdge e);
+	void removeEdge(V source, V destination, E e);
 	
 	void removeAllVertices();
 	
@@ -59,27 +68,38 @@ public interface Graph
 	 * @param v A vertex
 	 * @return True if vertex is in the graph, false if it is not contained or it is null
 	 */
-	boolean containsVertex(DefaultVertex v);
+	boolean containsVertex(V v);
 	
 	/**
 	 * @param e An edge
 	 * @return True if edge is in the graph, false if it is not contained or it is null
 	 */
-	boolean containsEdge(DefaultEdge e);
+	boolean containsEdge(E e);
+	
+	
+	/**
+	 * @param source vertex
+	 * @param dest vertex
+	 * @return true if one or more edges between source and dest
+	 */
+	boolean edgeBetween(V source, V dest);
 	
 	/**
 	 * @return A collection of all vertices in this graph.
 	 */
-	Collection<DefaultVertex> getVertices();
+	Collection<V> getVertices();
 	
 	/**
 	 * @return A collection of all edges in this graph
 	 */
-	Collection<DefaultEdge> getEdges();
+	Collection<E> getEdges();
 	
 	/**
 	 * @param v The vertex to get the neighbors of
 	 * @return A collection view of all the traversable vertex neighbors of <code>v</code>
 	 */
-	Collection<DefaultVertex> getNeighborsOf(DefaultVertex v);
+	Collection<V> getNeighborsOf(V v);
+	
+	int UNDIRECTED_EDGE = 0;
+	int DIRECTED_EDGE = 1;
 }

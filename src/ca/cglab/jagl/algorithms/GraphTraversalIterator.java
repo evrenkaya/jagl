@@ -2,7 +2,6 @@ package ca.cglab.jagl.algorithms;
 
 import java.util.Collection;
 
-import ca.cglab.jagl.graph.DefaultVertex;
 import ca.cglab.jagl.graph.Graph;
 
 /**
@@ -13,19 +12,19 @@ import ca.cglab.jagl.graph.Graph;
  * 
  * @author Evren Kaya
  */
-public abstract class GraphTraversalIterator
+public abstract class GraphTraversalIterator<V, E>
 {
-	protected final Graph graph;
+	protected final Graph<V, E> graph;
 	
-	public GraphTraversalIterator(Graph graph)
+	public GraphTraversalIterator(Graph<V, E> graph)
 	{
 		this.graph = graph;
 	}
 	
 	public abstract boolean hasNext();
 	
-	public abstract DefaultVertex next();
+	public abstract V next();
 	
-	public abstract Collection<DefaultVertex> getVisitedVertices();
+	public abstract Collection<V> getVisitedVertices();
 
 }

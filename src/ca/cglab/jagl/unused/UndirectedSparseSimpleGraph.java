@@ -6,12 +6,8 @@ package ca.cglab.jagl.unused;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
 
-import ca.cglab.jagl.graph.DefaultEdge;
-import ca.cglab.jagl.graph.DefaultVertex;
+import ca.cglab.jagl.graph.EdgeDirection;
 import ca.cglab.jagl.graph.Graph;
 
 /**
@@ -21,33 +17,33 @@ import ca.cglab.jagl.graph.Graph;
  * 
  * @author Evren Kaya
  */
-public class UndirectedSparseSimpleGraph implements Graph
+public class UndirectedSparseSimpleGraph<V, E> implements Graph<V, E>
 {
-	private ArrayList<DefaultVertex> vertices;
-	private HashMap<DefaultEdge, ArrayList<DefaultVertex>> edges;
+	private ArrayList<V> vertices;
+	private HashMap<E, ArrayList<V>> edges;
 	
 	public UndirectedSparseSimpleGraph(int initialVertexCapacity)
 	{
-		vertices = new ArrayList<DefaultVertex>(initialVertexCapacity);
-		edges = new HashMap<DefaultEdge, ArrayList<DefaultVertex>>();
+		vertices = new ArrayList<>(initialVertexCapacity);
+		edges = new HashMap<>();
 	}
 
-	public void addVertex(DefaultVertex v)
+	public void addVertex(V v)
 	{
 		vertices.add(v);
 	}
 
-	public void addEdge(DefaultEdge e)
+	public void addEdge(V source, V destination, E e, EdgeDirection edgeDirection)
 	{
-		ArrayList<DefaultVertex> endpoints = new ArrayList<DefaultVertex>(2);
+		/*ArrayList<DefaultVertex> endpoints = new ArrayList<DefaultVertex>(2);
 		endpoints.add(e.getFirstVertex());
 		endpoints.add(e.getSecondVertex());
-		edges.put(e, endpoints);
+		edges.put(e, endpoints);*/
 	}
 
-	public void removeVertex(DefaultVertex v)
+	public void removeVertex(V v)
 	{
-		vertices.remove(v);
+		/*vertices.remove(v);
 		
 		Iterator<Entry<DefaultEdge, ArrayList<DefaultVertex>>> it = edges.entrySet().iterator();
 	    while (it.hasNext())
@@ -61,11 +57,11 @@ public class UndirectedSparseSimpleGraph implements Graph
 	        }
 	        System.out.println(pair.getKey() + " = " + pair.getValue());
 	    }
-		
+		*/
 		//DefaultVertex.existingVertices--;
 	}
 
-	public void removeEdge(DefaultEdge e)
+	public void removeEdge(V source, V destination, E e)
 	{
 		edges.remove(e);
 		//DefaultEdge.existingEdges--;
@@ -81,16 +77,21 @@ public class UndirectedSparseSimpleGraph implements Graph
 		return edges.size();
 	}
 
-	public boolean containsVertex(DefaultVertex v)
+	public boolean containsVertex(V v)
 	{
 		//return v.getID() < vertices.size();
 		return vertices.contains(v);
 	}
 
-	public boolean containsEdge(DefaultEdge e)
+	public boolean containsEdge(E e)
 	{
 		//return e.getID() < edges.size();
 		return edges.containsKey(e);
+	}
+	
+	public boolean edgeBetween(V source, V dest)
+	{
+		return false;
 	}
 
 	/*public boolean isConnected()
@@ -104,19 +105,19 @@ public class UndirectedSparseSimpleGraph implements Graph
 		return bfi.getVisitedVertices().size() == vertices.size();
 	}*/
 
-	public Collection<DefaultVertex> getVertices()
+	public Collection<V> getVertices()
 	{
 		return vertices;
 	}
 
-	public Collection<DefaultEdge> getEdges()
+	public Collection<E> getEdges()
 	{
 		return edges.keySet();
 	}
 
-	public Collection<DefaultVertex> getNeighborsOf(DefaultVertex v)
+	public Collection<V> getNeighborsOf(V v)
 	{
-		ArrayList<DefaultVertex> neighbors = new ArrayList<DefaultVertex>();
+		/*ArrayList<DefaultVertex> neighbors = new ArrayList<DefaultVertex>();
 		
 		Iterator<Entry<DefaultEdge, ArrayList<DefaultVertex>>> it = edges.entrySet().iterator();
 	    while (it.hasNext())
@@ -134,7 +135,8 @@ public class UndirectedSparseSimpleGraph implements Graph
 	        }
 	        System.out.println(pair.getKey() + " = " + pair.getValue());
 	    }
-		return neighbors;
+		return neighbors;*/
+		return null;
 	}
 
 	public void removeAllVertices()

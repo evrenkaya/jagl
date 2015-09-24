@@ -11,31 +11,31 @@ import java.util.Map;
  * 
  * @author Evren Kaya
  */
-public abstract class AdjacencyGraph implements Graph
+public abstract class AdjacencyGraph<V, E> implements Graph<V, E>
 {
-	private Map<DefaultVertex, ArrayList<DefaultVertex>> adjacencyMap;
-	private Collection<DefaultEdge> edges;
+	private Map<V, ArrayList<V>> adjacencyMap;
+	private Collection<E> edges;
 	
-	public void addVertex(DefaultVertex v)
+	public void addVertex(V v)
 	{
-		adjacencyMap.put(v, new ArrayList<DefaultVertex>());
+		//adjacencyMap.put(v, new ArrayList<DefaultVertex>());
 	}
 	
-	public void addEdge(DefaultEdge e)
+	public void addEdge(E e)
 	{
 		if(e == null)
 		{
 			throw new IllegalArgumentException("Edge is null");
 		}
 		
-		edges.add(e);
+		/*edges.add(e);
 		adjacencyMap.get(e.getFirstVertex()).add(e.getSecondVertex());
-		adjacencyMap.get(e.getSecondVertex()).add(e.getFirstVertex());
+		adjacencyMap.get(e.getSecondVertex()).add(e.getFirstVertex());*/
 	}
 	
-	public void removeVertex(DefaultVertex v)
+	public void removeVertex(V v)
 	{
-		ArrayList<DefaultVertex> neighbors = adjacencyMap.remove(v);
+		/*ArrayList<DefaultVertex> neighbors = adjacencyMap.remove(v);
 		for(DefaultVertex neighbor : neighbors)
 		{
 			adjacencyMap.get(neighbor).remove(v);
@@ -48,29 +48,29 @@ public abstract class AdjacencyGraph implements Graph
 				removeEdge(e);
 			}
 		}
-		DefaultVertex.existingVertices--;
+		DefaultVertex.existingVertices--;*/
 	}
 	
-	public void removeEdge(DefaultEdge e)
+	public void removeEdge(V source, V destination, E e)
 	{
-		edges.remove(e);
+/*		edges.remove(e);
 		adjacencyMap.get(e.getFirstVertex()).remove(e.getSecondVertex());
 		adjacencyMap.get(e.getSecondVertex()).remove(e.getFirstVertex());
-		DefaultEdge.existingEdges--;
+		DefaultEdge.existingEdges--;*/
 	}
 	
 	public void removeAllVertices()
 	{
-		DefaultVertex.existingVertices -= adjacencyMap.size();
+/*		DefaultVertex.existingVertices -= adjacencyMap.size();
 		adjacencyMap.clear();
-		removeAllEdges();
+		removeAllEdges();*/
 	}
 	
 	public void removeAllEdges()
 	{
-		DefaultEdge.existingEdges -= edges.size();
+/*		DefaultEdge.existingEdges -= edges.size();
 		adjacencyMap.values().clear();
-		edges.clear();
+		edges.clear();*/
 	}
 	
 	public int numVertices()
@@ -83,27 +83,32 @@ public abstract class AdjacencyGraph implements Graph
 		return edges.size();
 	}
 	
-	public boolean containsVertex(DefaultVertex v)
+	public boolean containsVertex(V v)
 	{
 		return adjacencyMap.containsKey(v);
 	}
 	
-	public boolean containsEdge(DefaultEdge e)
+	public boolean containsEdge(E e)
 	{
 		return edges.contains(e);
 	}
 	
-	public Collection<DefaultVertex> getVertices()
+	public boolean edgeBetween(V source, V dest)
+	{
+		return false;
+	}
+	
+	public Collection<V> getVertices()
 	{
 		return adjacencyMap.keySet();
 	}
 	
-	public Collection<DefaultEdge> getEdges()
+	public Collection<E> getEdges()
 	{
 		return edges;
 	}
 	
-	public Collection<DefaultVertex> getNeighborsOf(DefaultVertex v)
+	public Collection<V> getNeighborsOf(V v)
 	{
 		return adjacencyMap.get(v);
 	}

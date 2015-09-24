@@ -3,8 +3,7 @@ package ca.cglab.jagl.unused;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import ca.cglab.jagl.graph.DefaultEdge;
-import ca.cglab.jagl.graph.DefaultVertex;
+import ca.cglab.jagl.graph.EdgeDirection;
 import ca.cglab.jagl.graph.UndirectedGraph;
 
 /**
@@ -12,15 +11,15 @@ import ca.cglab.jagl.graph.UndirectedGraph;
  * 
  * @author Evren Kaya
  */
-public class UndirectedDenseSimpleGraph implements UndirectedGraph
+public class UndirectedDenseSimpleGraph<V, E> implements UndirectedGraph<V, E>
 {
-	private ArrayList<DefaultVertex> vertices;
-	private ArrayList<DefaultEdge> edges;
+	private ArrayList<V> vertices;
+	private ArrayList<E> edges;
 	
 	public UndirectedDenseSimpleGraph(int initialVertexCapacity)
 	{
-		vertices = new ArrayList<DefaultVertex>(initialVertexCapacity);
-		edges = new ArrayList<DefaultEdge>(initialVertexCapacity);
+		vertices = new ArrayList<>(initialVertexCapacity);
+		edges = new ArrayList<>(initialVertexCapacity);
 	}
 	
 	public void removeAllVertices()
@@ -36,24 +35,24 @@ public class UndirectedDenseSimpleGraph implements UndirectedGraph
 		//DefaultEdge.existingEdges = 0;
 	}
 
-	public void addVertex(DefaultVertex v)
+	public void addVertex(V v)
 	{
-		vertices.add(v);
+		//vertices.add(v);
 	}
 	
-	public void addEdge(DefaultEdge e)
+	public void addEdge(V source, V destination, E e, EdgeDirection edgeDirection)
 	{
-		edges.add(e);
+		//edges.add(e);
 	}
 
 
-	public void removeVertex(DefaultVertex v)
+	public void removeVertex(V v)
 	{
 		vertices.remove(v);
 	}
 
 
-	public void removeEdge(DefaultEdge e)
+	public void removeEdge(V source, V destination, E e)
 	{
 		edges.remove(e);
 	}
@@ -70,12 +69,12 @@ public class UndirectedDenseSimpleGraph implements UndirectedGraph
 	}
 
 
-	public boolean containsVertex(DefaultVertex v)
+	public boolean containsVertex(V v)
 	{
 		return vertices.contains(v);
 	}
 
-	public boolean containsEdge(DefaultEdge e)
+	public boolean containsEdge(E e)
 	{
 		return edges.contains(e);
 	}
@@ -84,23 +83,28 @@ public class UndirectedDenseSimpleGraph implements UndirectedGraph
 	{
 		return false;
 	}
+	
+	public boolean edgeBetween(V source, V dest)
+	{
+		return false;
+	}
 
-	public Collection<DefaultVertex> getVertices()
+	public Collection<V> getVertices()
 	{
 		return vertices;
 	}
 
-	public Collection<DefaultEdge> getEdges()
+	public Collection<E> getEdges()
 	{
 		return edges;
 	}
 
-	public Collection<DefaultVertex> getNeighborsOf(DefaultVertex v)
+	public Collection<V> getNeighborsOf(V v)
 	{
-		ArrayList<DefaultVertex> neighbors = new ArrayList<DefaultVertex>();
+		/*ArrayList<DefaultVertex> neighbors = new ArrayList<DefaultVertex>();
 		for(int i = 0; i < edges.size(); i++)
 		{
-			DefaultEdge e = edges.get(i);
+			E e = edges.get(i);
 			if(e.getFirstVertex() == v)
 			{
 				neighbors.add(e.getSecondVertex());
@@ -110,7 +114,8 @@ public class UndirectedDenseSimpleGraph implements UndirectedGraph
 				neighbors.add(e.getFirstVertex());
 			}
 		}
-		return neighbors;
+		return neighbors;*/
+		return null;
 	}
 
 

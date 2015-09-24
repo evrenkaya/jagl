@@ -2,7 +2,7 @@ package ca.cglab.jagl.graph;
 
 import java.util.Collection;
 
-public interface DirectedGraph extends Graph
+public interface DirectedGraph<V, E> extends Graph<V, E>
 {
 	/**
 	 * A direct predecessor of a vertex is another vertex that
@@ -11,5 +11,7 @@ public interface DirectedGraph extends Graph
 	 * @param v A vertex
 	 * @return A Collection view of the direct predecessors of <code>v</code>
 	 */
-	Collection<DefaultVertex> getPredecessorsOf(DefaultVertex v);
+	Collection<V> getDirectPredecessorsOf(V v);
+	
+	Collection<V> getDirectSuccessorsOf(V v);
 }

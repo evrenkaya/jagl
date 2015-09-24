@@ -1,19 +1,19 @@
 package ca.cglab.jagl.algorithms;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 
-import ca.cglab.jagl.graph.DefaultVertex;
 import ca.cglab.jagl.graph.Graph;
 import ca.cglab.jagl.util.Stack;
 
-public class DepthFirstIterator extends GraphTraversalIterator
+public class DepthFirstIterator<V, E> extends GraphTraversalIterator<V, E>
 {
-	private final ArrayList<DefaultVertex> visitedVertices = new ArrayList<DefaultVertex>();
-	private final Stack<DefaultVertex> stack = new Stack<DefaultVertex>();
+	private final List<V> visitedVertices = new ArrayList<>();
+	private final Stack<V> stack = new Stack<>();
 	
-	public DepthFirstIterator(Graph graph, DefaultVertex startingVertex)
+	public DepthFirstIterator(Graph<V, E> graph, V startingVertex)
 	{
 		super(graph);
 		stack.push(startingVertex);
@@ -24,14 +24,14 @@ public class DepthFirstIterator extends GraphTraversalIterator
 		return !stack.isEmpty();
 	}
 
-	public DefaultVertex next() throws NoSuchElementException
+	public V next() throws NoSuchElementException
 	{
-		DefaultVertex next = stack.pop();
+		V next = stack.pop();
 		if(!visitedVertices.contains(next))
 		{
 			visitedVertices.add(next);
-			Collection<DefaultVertex> neighbors = graph.getNeighborsOf(next);
-			for(DefaultVertex v : neighbors)
+			Collection<V> neighbors = graph.getNeighborsOf(next);
+			for(V v : neighbors)
 			{
 				stack.push(v);
 			}
@@ -39,7 +39,7 @@ public class DepthFirstIterator extends GraphTraversalIterator
 		return next;
 	}
 
-	public Collection<DefaultVertex> getVisitedVertices()
+	public Collection<V> getVisitedVertices()
 	{
 		return visitedVertices;
 	}

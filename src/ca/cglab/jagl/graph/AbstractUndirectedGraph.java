@@ -1,120 +1,125 @@
 package ca.cglab.jagl.graph;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
-public abstract class AbstractUndirectedGraph implements UndirectedGraph
+import ca.cglab.jagl.util.Pair;
+
+public abstract class AbstractUndirectedGraph<V, E> implements UndirectedGraph<V, E>
 {
-	protected Set<DefaultVertex> vertices;
-	protected Set<DefaultEdge> edges;
+	protected Map<V, Set<V>> vertexAdjacencyMap;
+	protected Map<E, Pair<V, V>> edgeVertexMap;
+
 	
 	public AbstractUndirectedGraph()
 	{
-		vertices = new HashSet<DefaultVertex>();
-		edges = new HashSet<DefaultEdge>();
+		vertexAdjacencyMap = new HashMap<>();
+		edgeVertexMap = new HashMap<>();
 	}
 	
 	public void removeAllVertices()
 	{
-		DefaultVertex.existingVertices -= vertices.size();
-		vertices.clear();
-		
 		removeAllEdges();
 	}
 	
 	public void removeAllEdges()
 	{
-		DefaultEdge.existingEdges -= edges.size();
-		edges.clear();
+
 	}
 
-	public void addVertex(DefaultVertex v)
+	public void addVertex(V v)
 	{
 		if(v == null)
 		{
 			throw new IllegalArgumentException("Vertex null");
 		}
-		vertices.add(v);
+		vertexAdjacencyMap.put(v, new HashSet<V>());
 	}
 	
-	public void addEdge(DefaultEdge e)
+	public void addEdge(V source, V destination, E e, EdgeDirection edgeDirection)
 	{
-		if(e == null)
+		if(e == null || source == null || destination == null)
 		{
-			throw new IllegalArgumentException("Edge null");
+			throw new IllegalArgumentException("Vertex or edge null");
 		}
-		if(e.getDirection() != DefaultEdge.UNDIRECTED)
+		if(edgeDirection != EdgeDirection.UNDIRECTED)
 		{
 			throw new IllegalArgumentException("Edge is not undirected");
 		}
+		vertexAdjacencyMap.get(source).add(destination);
+		vertexAdjacencyMap.get(destination).add(source);
+		
+		edgeVertexMap.put(e, new Pair<V, V>(source, destination));
 	}
-
-	public void removeVertex(DefaultVertex v)
+	
+	public void removeVertex(V v)
 	{
-		if(vertices.remove(v))
+		Set<V> neighbors = vertexAdjacencyMap.remove(v);
+		for(Map.Entry<E, Pair<V, V>> entry : edgeVertexMap.entrySet())
 		{
-			DefaultVertex.existingVertices--;
+			E edge = entry.getKey();
+			Pair<V, V> vertexPair = entry.getValue();
+			for(V vertex : neighbors)
+			{
+				if(vertexPair.contains(v) && vertexPair.contains(vertex))
+				{
+					edgeVertexMap.remove(edge);
+				}
+			}
+			
+			
 		}
 	}
 
 
-	public void removeEdge(DefaultEdge e)
+	public void removeEdge(V source, V destination, E e)
 	{
-		if(edges.remove(e))
-		{
-			DefaultEdge.existingEdges--;
-		}
+		Pair<V, V> pair = edgeVertexMap.remove(e);
+		vertexAdjacencyMap.get(pair.getA()).remove(pair.getB());
+		vertexAdjacencyMap.get(pair.getB()).remove(pair.getA());
 	}
 
 	public int numVertices()
 	{
-		return vertices.size();
+		return vertexAdjacencyMap.size();
 	}
-
 
 	public int numEdges()
 	{
-		return edges.size();
-	}
-
-
-	public boolean containsVertex(DefaultVertex v)
-	{
-		return vertices.contains(v);
-	}
-
-	public boolean containsEdge(DefaultEdge e)
-	{
-		return edges.contains(e);
+		return edgeVertexMap.size();
 	}
 	
-	public Collection<DefaultVertex> getVertices()
+	public boolean edgeBetween(V source, V dest)
 	{
-		return vertices;
+		return false;
 	}
 
-	public Collection<DefaultEdge> getEdges()
+
+	public boolean containsVertex(V v)
 	{
-		return edges;
+		return vertexAdjacencyMap.containsKey(v);
 	}
 
-	public Collection<DefaultVertex> getNeighborsOf(DefaultVertex v)
+	public boolean containsEdge(E e)
 	{
-		Set<DefaultVertex> neighbors = new HashSet<DefaultVertex>();
-		for(Iterator<DefaultEdge> it = edges.iterator(); it.hasNext();)
-		{
-			DefaultEdge e = it.next();
-			if(e.getFirstVertex() == v)
-			{
-				neighbors.add(e.getSecondVertex());
-			}
-			else if(e.getSecondVertex() == v)
-			{
-				neighbors.add(e.getFirstVertex());
-			}
-		}
-		return neighbors;
+		return edgeVertexMap.containsKey(e);
+	}
+	
+	public Collection<V> getVertices()
+	{
+		return vertexAdjacencyMap.keySet();
+	}
+
+	public Collection<E> getEdges()
+	{
+		return edgeVertexMap.keySet();
+	}
+
+	public Collection<V> getNeighborsOf(V v)
+	{
+		return vertexAdjacencyMap.get(v);
 	}
 }

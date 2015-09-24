@@ -3,10 +3,10 @@ package ca.cglab.jagl.algorithms;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Queue;
 
-import ca.cglab.jagl.graph.DefaultVertex;
 import ca.cglab.jagl.graph.Graph;
 
 /**
@@ -17,12 +17,12 @@ import ca.cglab.jagl.graph.Graph;
  * 
  * @author Evren Kaya
  */
-public class BreadthFirstIterator extends GraphTraversalIterator
+public class BreadthFirstIterator<V, E> extends GraphTraversalIterator<V, E>
 {
-	private final ArrayList<DefaultVertex> visitedVertices = new ArrayList<DefaultVertex>();
-	private final Queue<DefaultVertex> queue = new ArrayDeque<DefaultVertex>();
+	private final List<V> visitedVertices = new ArrayList<>();
+	private final Queue<V> queue = new ArrayDeque<>();
 	
-	public BreadthFirstIterator(Graph graph, DefaultVertex startingVertex)
+	public BreadthFirstIterator(Graph<V, E> graph, V startingVertex)
 	{
 		super(graph);
 		queue.add(startingVertex);
@@ -34,11 +34,11 @@ public class BreadthFirstIterator extends GraphTraversalIterator
 		return !queue.isEmpty();
 	}
 
-	public DefaultVertex next() throws NoSuchElementException
+	public V next() throws NoSuchElementException
 	{
-		DefaultVertex next = queue.remove();
-		Collection<DefaultVertex> neighbors = graph.getNeighborsOf(next);
-		for(DefaultVertex v : neighbors)
+		V next = queue.remove();
+		Collection<V> neighbors = graph.getNeighborsOf(next);
+		for(V v : neighbors)
 		{
 			if(!visitedVertices.contains(v))
 			{
@@ -50,7 +50,7 @@ public class BreadthFirstIterator extends GraphTraversalIterator
 		return next;
 	}
 	
-	public Collection<DefaultVertex> getVisitedVertices()
+	public Collection<V> getVisitedVertices()
 	{
 		return visitedVertices;
 	}

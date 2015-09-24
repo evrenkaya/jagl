@@ -1,14 +1,20 @@
 package ca.cglab.jagl.graph;
 
-public class UndirectedSimpleGraph extends AbstractUndirectedGraph
+import ca.cglab.jagl.util.Pair;
+
+public class UndirectedSimpleGraph<V, E> extends AbstractUndirectedGraph<V, E>
 {
-	public void addEdge(DefaultEdge e)
+	public void addEdge(V source, V destination, E e, EdgeDirection edgeDirection)
 	{
-		super.addEdge(e);
-		if(e.getFirstVertex().equals(e.getSecondVertex()))
+		super.addEdge(source, destination, e, edgeDirection);
+		if(source.equals(destination))
 		{
 			throw new IllegalArgumentException("Loops are not allowed");
 		}
-		edges.add(e);
+		
+		vertexAdjacencyMap.get(source).add(destination);
+		vertexAdjacencyMap.get(destination).add(source);
+		
+		edgeVertexMap.put(e, new Pair<V, V>(source, destination));
 	}
 }

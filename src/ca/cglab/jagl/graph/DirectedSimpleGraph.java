@@ -1,13 +1,13 @@
 package ca.cglab.jagl.graph;
 
-public class DirectedSimpleGraph extends AbstractDirectedGraph
+public class DirectedSimpleGraph<V, E> extends AbstractDirectedGraph<V, E>
 {
-	public void addEdge(DefaultEdge e)
+	public void addEdge(V source, V destination, E e, EdgeDirection edgeDirection)
 	{
-		if(e.getFirstVertex().equals(e.getSecondVertex()))
+		if(source.equals(destination))
 		{
 			throw new IllegalArgumentException("Loops are not allowed");
 		}
-		edges.add(e);
+		//edges.add(e);
 	}
 }

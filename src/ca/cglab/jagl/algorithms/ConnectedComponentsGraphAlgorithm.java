@@ -5,53 +5,52 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 
-import ca.cglab.jagl.graph.DefaultVertex;
 import ca.cglab.jagl.graph.Graph;
 
 /**
  * @author Evren Kaya
  */
-public class ConnectedComponentsGraphAlgorithm implements GraphAlgorithm
+public class ConnectedComponentsGraphAlgorithm<V, E> implements GraphAlgorithm
 {
-	private final Graph graph;
-	private ArrayList<ArrayList<DefaultVertex>> connectedComponents;
+	private final Graph<V, E> graph;
+	private ArrayList<ArrayList<V>> connectedComponents;
 
 	
-	public ConnectedComponentsGraphAlgorithm(Graph graph)
+	public ConnectedComponentsGraphAlgorithm(Graph<V, E> graph)
 	{
 		this.graph = graph;
 	}
 	// This method only needs to be called once
 	public void run()
 	{
-		connectedComponents = new ArrayList<ArrayList<DefaultVertex>>();
+		connectedComponents = new ArrayList<>();
 		
-		Collection<DefaultVertex> vertices = graph.getVertices();
-		Iterator<DefaultVertex> vertexIterator = vertices.iterator();
-		HashSet<DefaultVertex> visitedVertices = new HashSet<DefaultVertex>();
+		Collection<V> vertices = graph.getVertices();
+		Iterator<V> vertexIterator = vertices.iterator();
+		HashSet<V> visitedVertices = new HashSet<>();
 		
 		// Start with the first component in the iterator
-		ArrayList<DefaultVertex> first = getComponentWith(vertexIterator.next());
+		ArrayList<V> first = getComponentWith(vertexIterator.next());
 		visitedVertices.addAll(first);
 		connectedComponents.add(first);
 
 		while(vertexIterator.hasNext())
 		{
-			DefaultVertex v = vertexIterator.next();
+			V v = vertexIterator.next();
 			if(!visitedVertices.contains(v))
 			{
 				// Determine the connected component that v is in
-				ArrayList<DefaultVertex> nextComponent = getComponentWith(v);
+				ArrayList<V> nextComponent = getComponentWith(v);
 				visitedVertices.addAll(nextComponent);
 				connectedComponents.add(nextComponent);
 			}
 		}
 	}
 	
-	public ArrayList<DefaultVertex> getComponentWith(DefaultVertex v)
+	public ArrayList<V> getComponentWith(V v)
 	{
-		BreadthFirstIterator iterator = new BreadthFirstIterator(graph, v);
-		ArrayList<DefaultVertex> component = new ArrayList<DefaultVertex>();
+		BreadthFirstIterator<V, E> iterator = new BreadthFirstIterator<>(graph, v);
+		ArrayList<V> component = new ArrayList<>();
 		while(iterator.hasNext())
 		{
 			component.add(iterator.next());
@@ -63,7 +62,7 @@ public class ConnectedComponentsGraphAlgorithm implements GraphAlgorithm
 	public int numComponentsWithExactlyKVertices(int k)
 	{
 		int total = 0;
-		for(ArrayList<DefaultVertex> v : connectedComponents)
+		for(ArrayList<V> v : connectedComponents)
 		{
 			if(v.size() == k)
 			{
@@ -77,7 +76,7 @@ public class ConnectedComponentsGraphAlgorithm implements GraphAlgorithm
 	public int numComponentsWithAtLeastKVertices(int k)
 	{
 		int total = 0;
-		for(ArrayList<DefaultVertex> v : connectedComponents)
+		for(ArrayList<V> v : connectedComponents)
 		{
 			if(v.size() >= k)
 			{
