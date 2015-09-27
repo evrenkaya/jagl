@@ -99,7 +99,4 @@ public interface Graph<V, E>
 	 * @return A collection view of all the traversable vertex neighbors of <code>v</code>
 	 */
 	Collection<V> getNeighborsOf(V v);
-	
-	int UNDIRECTED_EDGE = 0;
-	int DIRECTED_EDGE = 1;
 }
