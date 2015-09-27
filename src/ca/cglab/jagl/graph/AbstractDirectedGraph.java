@@ -80,18 +80,6 @@ public abstract class AbstractDirectedGraph<V, E> implements DirectedGraph<V, E>
 		vertexAdjacencyMap.get(pair.getA()).remove(pair.getB());
 	}
 
-	public int numVertices()
-	{
-		return vertexAdjacencyMap.size();
-	}
-
-
-	public int numEdges()
-	{
-		return edgeVertexMap.size();
-	}
-
-
 	public boolean containsVertex(V v)
 	{
 		return vertexAdjacencyMap.containsKey(v);

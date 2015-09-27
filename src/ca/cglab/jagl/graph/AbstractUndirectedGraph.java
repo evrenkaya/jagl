@@ -81,16 +81,6 @@ public abstract class AbstractUndirectedGraph<V, E> implements UndirectedGraph<V
 		vertexAdjacencyMap.get(pair.getA()).remove(pair.getB());
 		vertexAdjacencyMap.get(pair.getB()).remove(pair.getA());
 	}
-
-	public int numVertices()
-	{
-		return vertexAdjacencyMap.size();
-	}
-
-	public int numEdges()
-	{
-		return edgeVertexMap.size();
-	}
 	
 	public boolean edgeBetween(V source, V dest)
 	{
