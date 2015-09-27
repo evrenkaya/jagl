@@ -14,55 +14,63 @@ import java.util.Collection;
  * Created on June 26, 2015
  * 
  * @author Evren Kaya
- */
-/**
- * @author Brayden
- *
- * @param <V>
- * @param <E>
+ * 
+ * @param <V> The Vertex data type
+ * @param <E> The Edge data type
  */
 public interface Graph<V, E>
 {
 	/**
-	 * Adds the given vertex to the graph.
+	 * Adds <code>v</code> to the graph if it does not already exist.
 	 * 
 	 * @param v A vertex
 	 */
 	void addVertex(V v);
 	
 	/**
-	 * Adds the given edge to the graph.
+	 * Adds the <code>e</code> to the graph. In a graph where multi 
+	 * edges are permitted, there may be more than edge between 
+	 * <code>source</code> and <code>dest</code>. In a graph where multi edges
+	 * are not permitted, if one edge is already present between
+	 * <code>source</code> and <code>dest</code>, this method does
+	 * not change the graph.
 	 * 
 	 * @param e An edge
-	 * @param v1 First vertex attached to e
-	 * @param v2 Second vertex attached to e
+	 * @param source Source vertex attached to <code>e</code>
+	 * @param dest Destination vertex attached to <code>e</code>
 	 * @param edgeDirection Direction of edge e
 	 */
-	void addEdge(V source, V destination, E e, EdgeDirection edgeDirection);
+	void addEdge(V source, V dest, E e, EdgeDirection edgeDirection);
 	
 	/**
+	 * Removes <code>v</code> from the graph if it has not already been removed.
+	 * Also removes any edges <code>v</code> was attached to.
+	 * 
 	 * @param v A vertex
 	 */
 	void removeVertex(V v);
 	
 	/**
+	 * Removes the given edge <code>e</code> between <code>source</code>
+	 * and <code>dest</code> vertices from the graph if it has not already been removed.
+	 * 
+	 * @param source Source vertex attached to <code>e</code>.
+	 * @param dest Destination vertex attached to <code>e</code>.
 	 * @param e An edge
 	 */
-	void removeEdge(V source, V destination, E e);
+	void removeEdge(V source, V dest, E e);
 	
+	/**
+	 * Removes all the vertices and edges in the graph.
+	 * 
+	 */
 	void removeAllVertices();
 	
+	/**
+	 * Removes all the edges in the graph, leaving the vertices unchanged.
+	 * 
+	 */
 	void removeAllEdges();
-	
-	/**
-	 * @return Number of vertices currently in this graph
-	 */
-	int numVertices();
-	
-	/**
-	 * @return Number of edges currently in this graph
-	 */
-	int numEdges();
 	
 	/**
 	 * @param v A vertex
@@ -80,7 +88,8 @@ public interface Graph<V, E>
 	/**
 	 * @param source vertex
 	 * @param dest vertex
-	 * @return true if one or more edges between source and dest
+	 * @return true if one or more edges exist between <code>source</code>
+	 * and <code>dest</code>
 	 */
 	boolean edgeBetween(V source, V dest);
 	

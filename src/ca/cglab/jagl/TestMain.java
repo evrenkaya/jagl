@@ -39,7 +39,5 @@ public class TestMain
 		long endTime = System.currentTimeMillis();
 		long elapsed = endTime - startTime;
 		System.out.println("Elapsed: " + elapsed);
-		System.out.println("Num Vertices: " + graph.numVertices());
-		System.out.println("Num Edges: " + graph.numEdges());
 	}
 }
