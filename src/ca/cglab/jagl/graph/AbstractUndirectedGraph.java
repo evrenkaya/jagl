@@ -22,12 +22,13 @@ public abstract class AbstractUndirectedGraph<V, E> implements UndirectedGraph<V
 	
 	public void removeAllVertices()
 	{
+		vertexAdjacencyMap = new HashMap<>();
 		removeAllEdges();
 	}
 	
 	public void removeAllEdges()
 	{
-
+		edgeVertexMap = new HashMap<>();
 	}
 
 	public void addVertex(V v)
@@ -41,14 +42,6 @@ public abstract class AbstractUndirectedGraph<V, E> implements UndirectedGraph<V
 	
 	public void addEdge(V source, V destination, E e, EdgeDirection edgeDirection)
 	{
-		if(e == null || source == null || destination == null)
-		{
-			throw new IllegalArgumentException("Vertex or edge null");
-		}
-		if(edgeDirection != EdgeDirection.UNDIRECTED)
-		{
-			throw new IllegalArgumentException("Edge is not undirected");
-		}
 		vertexAdjacencyMap.get(source).add(destination);
 		vertexAdjacencyMap.get(destination).add(source);
 		
@@ -84,7 +77,9 @@ public abstract class AbstractUndirectedGraph<V, E> implements UndirectedGraph<V
 	
 	public boolean edgeBetween(V source, V dest)
 	{
-		return false;
+		Set<V> srcNeighbors = vertexAdjacencyMap.get(source);
+		
+		return (srcNeighbors.contains(dest));
 	}
 
 
