@@ -21,12 +21,13 @@ public abstract class AbstractDirectedGraph<V, E> implements DirectedGraph<V, E>
 	
 	public void removeAllVertices()
 	{
+		vertexAdjacencyMap = new HashMap<>();
 		removeAllEdges();
 	}
 	
 	public void removeAllEdges()
 	{
-
+		edgeVertexMap = new HashMap<>();
 	}
 
 	public void addVertex(V v)
@@ -40,17 +41,7 @@ public abstract class AbstractDirectedGraph<V, E> implements DirectedGraph<V, E>
 	
 	public void addEdge(V source, V destination, E e, EdgeDirection edgeDirection)
 	{
-		if(e == null)
-		{
-			throw new IllegalArgumentException("Edge null");
-		}
-		if(edgeDirection != EdgeDirection.DIRECTED)
-		{
-			throw new IllegalArgumentException("Edge is not directed");
-		}
-		
 		vertexAdjacencyMap.get(source).add(destination);
-		
 		edgeVertexMap.put(e, new Pair<V, V>(source, destination));
 	}
 
@@ -92,7 +83,10 @@ public abstract class AbstractDirectedGraph<V, E> implements DirectedGraph<V, E>
 	
 	public boolean edgeBetween(V source, V dest)
 	{
-		return false;
+		Set<V> srcNeighbors = vertexAdjacencyMap.get(source);
+		Set<V> destNeighbors = vertexAdjacencyMap.get(dest);
+		
+		return srcNeighbors.contains(dest) || destNeighbors.contains(source);
 	}
 	
 	public Collection<V> getVertices()
@@ -126,6 +120,6 @@ public abstract class AbstractDirectedGraph<V, E> implements DirectedGraph<V, E>
 	
 	public Collection<V> getDirectSuccessorsOf(V v)
 	{
-		return null;
+		return getNeighborsOf(v);
 	}
 }
