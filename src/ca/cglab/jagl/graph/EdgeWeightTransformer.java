@@ -1,11 +1,12 @@
 package ca.cglab.jagl.graph;
 
-public interface EdgeWeightTransformer<E>
+public interface EdgeWeightTransformer<V, E>
 {
 	
 	/**
-	 * @param e An edge
-	 * @return The weight of an edge
+	 * @param v1 Source vertex
+	 * @param v2 Destination vertex
+	 * @return The weight of the edge between them, if it exists
 	 */
-	double weightOf(E e);
+	double weightOf(V v1, V v2);
 }
