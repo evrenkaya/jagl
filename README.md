@@ -13,4 +13,7 @@ Some of the types of graphs that can be created:
 Some of the algorithms supported:
 - Depth first search
 - Breadth first search
+- Dijkstra's Shortest Path
 - Connected Sub-Graph Determination
+
+Note: Not all of the classes have been fully implemented/tested.
