@@ -20,6 +20,7 @@ public class DirectedSimpleGraph<V, E> extends AbstractDirectedGraph<V, E>
 		{
 			throw new IllegalArgumentException("Edge already exists between vertices");
 		}
-		//edges.add(e);
+		
+		super.addEdge(source, destination, e, edgeDirection);
 	}
 }

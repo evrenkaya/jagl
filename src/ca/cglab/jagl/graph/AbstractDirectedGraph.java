@@ -48,7 +48,6 @@ public abstract class AbstractDirectedGraph<V, E> implements DirectedGraph<V, E>
 
 	public void removeVertex(V v)
 	{
-		// TODO Fix this implementation
 		Set<V> neighbors = vertexAdjacencyMap.remove(v);
 		for(Map.Entry<E, Pair<V, V>> entry : edgeVertexMap.entrySet())
 		{
@@ -56,6 +55,11 @@ public abstract class AbstractDirectedGraph<V, E> implements DirectedGraph<V, E>
 			Pair<V, V> vertexPair = entry.getValue();
 			for(V vertex : neighbors)
 			{
+				// Remove in-edges from the vertex adjacency mapping
+				Set<V> otherNeighbors = vertexAdjacencyMap.get(vertex);
+				otherNeighbors.remove(v);
+				
+				// Remove all edges associated with v from the edge vertex mapping
 				if(vertexPair.contains(v) && vertexPair.contains(vertex))
 				{
 					edgeVertexMap.remove(edge);
